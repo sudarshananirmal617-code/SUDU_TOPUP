@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SUDU TOPUP</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#100d20;color:white;font-family:Arial}
+header{text-align:center;padding:20px;background:#21143d}
+header h1{color:#ae91ff}
+.hero{text-align:center;padding:30px 10px;background:linear-gradient(120deg,#30106b,#07518a)}
+.container{padding:17px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{background:#251d3e;border:2px solid #6245a0;border-radius:12px;padding:15px 5px;color:white;cursor:pointer}
+.item.active{border-color:#22d3ee;background:#352456}
+.item h3{color:#c2a5ff}
+input{width:100%;padding:13px;background:#241c38;color:white;border:1px solid #7655ad;border-radius:8px;margin:9px 0}
+.action{width:100%;padding:13px;background:linear-gradient(90deg,#7545e9,#247be9);border:0;border-radius:9px;color:white;font-weight:bold;margin-top:10px;cursor:pointer}
+.whatsapp{background:#168b45}
+.box{background:#251d3e;padding:15px;border-radius:12px;margin-top:15px}
+.hidden{display:none}
+.muted{color:#aaa;font-size:12px}
+footer{text-align:center;padding:25px;color:#aaa}
+</style>
+</head>
+<body>
+
+<header>
+<h1>💎 SUDU TOPUP</h1>
+FREE FIRE DIAMOND STORE
+</header>
+
+<div class="hero">
+<h2>LEVEL UP YOUR GAME!</h2>
+<p>Fast & Easy Top-Up</p>
+</div>
+
+<div class="container">
+
+<h3>💎 Diamond Packages</h3>
+<div class="grid">
+<button class="item active" data-name="100 Diamonds" data-price="250"><h3>100 💎</h3>Rs.250</button>
+<button class="item" data-name="310 Diamonds" data-price="700"><h3>310 💎</h3>Rs.700</button>
+<button class="item" data-name="520 Diamonds" data-price="1150"><h3>520 💎</h3>Rs.1150</button>
+<button class="item" data-name="1060 Diamonds" data-price="2250"><h3>1060 💎</h3>Rs.2250</button>
+<button class="item" data-name="2180 Diamonds" data-price="4500"><h3>2180 💎</h3>Rs.4500</button>
+</div>
+
+<h3>👑 Membership Packages</h3>
+<div class="grid">
+<button class="item" data-name="Weekly Lite" data-price="100"><h3>⚡ Weekly Lite</h3>Rs.100</button>
+<button class="item" data-name="Weekly" data-price="600"><h3>🔥 Weekly</h3>Rs.600</button>
+<button class="item" data-name="Monthly" data-price="2900"><h3>👑 Monthly</h3>Rs.2900</button>
+</div>
+
+<p class="muted">Demo prices only. Confirm supplier prices before selling.</p>
+
+<div class="box">
+<h3>🆔 Player Verification</h3>
+<input id="player" inputmode="numeric" placeholder="Enter Free Fire Player ID">
+<button class="action" onclick="checkPlayer()">CHECK PLAYER ID</button>
+<div id="result" class="hidden">
+<hr>
+<h3>🎮 Player Details</h3>
+<p><b>Player Name:</b> <span id="pname">Not available</span></p>
+<p><b>Account Level:</b> <span id="plevel">Not available</span></p>
+<p class="muted">Real player API is not connected.</p>
+</div>
+<p id="status" class="muted"></p>
+</div>
+
+<div class="box">
+<h3>🛒 Order Summary</h3>
+<p>Package: <b id="selected">100 Diamonds</b></p>
+<p>Total: <b id="total">LKR 250</b></p>
+<button class="action whatsapp" onclick="whatsappOrder()">📲 ORDER VIA WHATSAPP</button>
+<p id="message" class="muted"></p>
+<p class="muted">Order inquiry only. Payment and delivery are not connected yet.</p>
+</div>
+
+<div class="box">
+<h3>🏦 Bank Transfer</h3>
+<p><b>Bank Name:</b> HNB Bank</p>
+<p><b>Account Holder:</b> Account Holder Name</p>
+<p><b>Account Number:</b> XXXX XXXX XXXX</p>
+<p><b>Contact:</b> WhatsApp Business Number</p>
+<hr>
+<p><b>Payment Reference:</b> Free Fire Player ID</p>
+<p class="muted">
+Please contact us to confirm payment details before making a transfer.
+</p>
+</div>
+
+</div>
+
+<footer>© 2026 SUDU TOPUP</footer>
+
+<script>
+const WHATSAPP_NUMBER = "94XXXXXXXXX";
+
+let packageName = "100 Diamonds";
+let price = 250;
+
+document.querySelectorAll('.item').forEach(btn=>{
+btn.addEventListener('click',()=>{
+document.querySelectorAll('.item').forEach(x=>x.classList.remove('active'));
+btn.classList.add('active');
+packageName = btn.dataset.name;
+price = Number(btn.dataset.price);
+document.getElementById('selected').textContent = packageName;
+document.getElementById('total').textContent = 'LKR ' + price;
+});
+});
+
+function checkPlayer(){
+let id = document.getElementById('player').value.trim();
+let status = document.getElementById('status');
+document.getElementById('result').classList.add('hidden');
+
+if(!/^[0-9]{5,20}$/.test(id)){
+status.textContent = "Please enter a valid Player ID.";
+return;
+}
+
+status.textContent = "Demo only: Player API is not connected.";
+document.getElementById('pname').textContent = "Not available";
+document.getElementById('plevel').textContent = "Not available";
+document.getElementById('result').classList.remove('hidden');
+}
+
+function whatsappOrder(){
+let id = document.getElementById('player').value.trim();
+let msg = document.getElementById('message');
+
+if(!/^[0-9]{5,20}$/.test(id)){
+msg.textContent = "Please enter a valid Player ID first.";
+return;
+}
+
+if(!/^94[0-9]{9}$/.test(WHATSAPP_NUMBER)){
+msg.textContent = "WhatsApp number is not configured yet.";
+return;
+}
+
+let text =
+"Hello SUDU TOPUP! I want to place an order.\n\n"+
+"Package: "+packageName+"\n"+
+"Price: LKR "+price+"\n"+
+"Player ID: "+id;
+
+window.location.href =
+"https://wa.me/"+WHATSAPP_NUMBER+
+"?text="+encodeURIComponent(text);
+}
+</script>
+</body>
+</html>
